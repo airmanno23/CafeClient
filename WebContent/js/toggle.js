@@ -14,7 +14,7 @@ function toggle() {
 }
 
 function validateForm() {
-	var x = document.forms["NewOrder"]["type"].value;
+	var x = document.forms["NewOrderForm"]["type"].value;
 	if (x == null || x == "null") {
 		alert("Please choose the type of cafe.");
 		return false;

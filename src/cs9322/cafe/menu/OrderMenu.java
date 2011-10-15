@@ -19,8 +19,9 @@ public enum OrderMenu {
 		contentStore.put("Skim milk", 1.0);
 		contentStore.put("Extra shot", 0.5);
     }
+    
     public double getPrice(String key){
-        if(key == null || key.length() == 0)
+        if(key == null || key.length() == 0 || !contentStore.containsKey(key))
         	return 0.0;
         else
         	return contentStore.get(key);

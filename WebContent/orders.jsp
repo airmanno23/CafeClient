@@ -30,10 +30,79 @@
 	JSONObject json = new JSONObject(results);
 	JSONArray orders = json.getJSONArray("order");
 	
+	String t = request.getParameter("type");
+	String a = request.getParameter("additions");
+	String o_id = request.getParameter("id");
+	
 %>
 
+<% 
+	if(t != null && t.length() != 0) {
+%>
+<form method="post" action="DoUpdate">
+<table>
+	<tr><td><input name="id" value="<%=o_id %>" type="hidden"></td></tr>
+	<tr>
+		<td>Type: </td>
+		<td><select id="type" name="type" style="width:120px;">
+			<option value="<%=t %>"><%=t %></option>
+<% 
+	if(!t.equals("Mocha")) {
+%>
+			<option value="Mocha" label="Mocha">Mocha</option>
+<%
+	}
+	if(!t.equals("Long Black")) {
+%>
+			<option value="Long Black" label="Long Black">Long Black</option>
+<%
+	}
+	if(!t.equals("Latte")) {
+%>
+			<option value="Latte" label="Latte">Latte</option>
+<%
+	}
+	if(!t.equals("Cappuccino")) {
+%>
+			<option value="Cappuccino" label="Cappuccino">Cappuccino</option>
+<%
+	}
+%>
+		</select></td>
+	</tr>
+	<tr>
+		<td>Additions: </td>
+		<td><select name="additions" style="width:120px;">
+			<option value="<%=a %>"><%=a %></option>
+<% 
+	if(!a.equals("None")) {
+%>
+			<option value="None" label="None">None</option>
+<% 
+	}
+	if(!a.equals("Skim milk")) {
+%>
+			<option value="Skim milk" label="Skim milk">Skim milk</option>
+<% 
+	}
+	if(!a.equals("Extra shot")) {
+%>
+			<option value="Extra shot" label="Extra shot">Extra shot</option>
+<%
+	}
+%>
+		</select></td>
+	</tr>
+	<tr>
+		<td colspan="2"><input name="submit" value="Submit" type="submit"></td>
+	</tr>
+</table>
+</form>
+<% 
+	}
+%>
 <div id="NewOrder" class="newOrder">
-<form method="post" action="MakeOrder">
+<form id="NewOrderForm" method="post" action="MakeOrder" onsubmit="return validateForm()">
 <table>
 	<tr>
 		<td>Type: </td>
@@ -86,6 +155,7 @@
 		<td><%=additions %></td>
 		<td><%=cost %></td>
 		<td><a href="OrderCancel?id=<%=id %>">Cancel</a></td>
+		<td><a href="UpdateOrder?id=<%=id %>">Update</a></td>
 	</tr>
 <%
 	}

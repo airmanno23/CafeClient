@@ -34,4 +34,24 @@
     <servlet-name>MakeOrder</servlet-name>
     <url-pattern>/MakeOrder</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateOrder</display-name>
+    <servlet-name>UpdateOrder</servlet-name>
+    <servlet-class>cs9322.cafe.control.UpdateOrder</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateOrder</servlet-name>
+    <url-pattern>/UpdateOrder</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DoUpdate</display-name>
+    <servlet-name>DoUpdate</servlet-name>
+    <servlet-class>cs9322.cafe.control.DoUpdate</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DoUpdate</servlet-name>
+    <url-pattern>/DoUpdate</url-pattern>
+  </servlet-mapping>
 </web-app>
