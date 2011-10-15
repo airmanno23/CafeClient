@@ -16,6 +16,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/toggle.js"></script>
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 <title>Cafe Orders</title>
 </head>
 <body>
@@ -30,8 +32,40 @@
 	
 %>
 
+<div id="NewOrder" class="newOrder">
+<form method="post" action="MakeOrder">
+<table>
+	<tr>
+		<td>Type: </td>
+		<td><select id="type" name="type" style="width:120px;">
+			<option value="null">----SELECT----</option>
+			<option value="Mocha" label="Mocha">Mocha</option>
+			<option value="Long Black" label="Long Black">Long Black</option>
+			<option value="Latte" label="Latte">Latte</option>
+			<option value="Cappuccino" label="Cappuccino">Cappuccino</option>
+		</select></td>
+	</tr>
+	<tr>
+		<td>Additions: </td>
+		<td><select name="additions" style="width:120px;">
+			<option value="None">----SELECT----</option>
+			<option value="None" label="None">None</option>
+			<option value="Skim milk" label="Skim milk">Skim milk</option>
+			<option value="Extra shot" label="Extra shot">Extra shot</option>
+		</select></td>
+	</tr>
+	<tr>
+		<td colspan="2"><input name="submit" value="Submit" type="submit"></td>
+	</tr>
+</table>
+</form>
+</div>
+
 <form method="post" action="controller">
 <table>
+	<tr>
+		<td colspan="4"><a id="displayText" href="javascript:toggle()">New Order</a></td>
+	</tr>
 	<tr>
 		<td>ID</td>
 		<td>Type</td>
@@ -58,5 +92,6 @@
 %>
 </table>
 </form>
+
 </body>
 </html>
