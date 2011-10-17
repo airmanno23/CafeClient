@@ -18,15 +18,15 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.representation.Form;
 
 /**
- * Servlet implementation class DoUpdate
+ * Servlet implementation class MakePayment
  */
-public class DoUpdate extends HttpServlet {
+public class MakePayment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DoUpdate() {
+    public MakePayment() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,16 +35,20 @@ public class DoUpdate extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		String type = request.getParameter("type");
-		String additions = request.getParameter("additions");
+		String oid = request.getParameter("oid");
+		String amount = request.getParameter("amount");
+		String paymentType = request.getParameter("paymentType");
+		String cardNumber = request.getParameter("cardNumber");
+		
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		WebResource service = client.resource(getBaseURI());
 		Form form = new Form();
-		form.add("type", type);
-		form.add("additions", additions);
-		service.path("rest/orders").path(id).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
+		form.add("id", oid);
+		form.add("amount", amount);
+		form.add("type", paymentType);
+		form.add("cardNumber", cardNumber);
+		service.path("rest/payments/new").type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
 		
 		response.sendRedirect("orders.jsp");
 	}
@@ -53,11 +57,10 @@ public class DoUpdate extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		doGet(request,response);
 	}
 	
 	private static URI getBaseURI() {
 		return UriBuilder.fromUri("http://localhost:8080/CafeRESTfulServices").build();
 	}
-
 }

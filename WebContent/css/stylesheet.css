@@ -3,3 +3,7 @@
 div.newOrder {
 	display: none;
 }
+
+input.readonly {
+	border:0 none;
+}

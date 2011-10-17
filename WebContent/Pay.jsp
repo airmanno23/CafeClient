@@ -14,6 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="js/toggle.js"></script>
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 <title>Pay the order</title>
 </head>
 <body>
@@ -30,28 +31,28 @@
 	String additions = json.getString("additions");
 %>
 
-<form id="paymentForm" method="post" onsubmit="return validatePaymentForm()">
+<form id="paymentForm" method="post" onsubmit="return validatePaymentForm()" action="MakePayment">
 <table>
 	<tr>
 		<td>Order ID:</td>
-		<td><%=id %></td>
+		<td><input name="oid" type="text" class="readonly" readonly="readonly" value="<%=id %>"></td>
 	</tr>
 	<tr>
 		<td>Cafe type: </td>
-		<td><%=cafeType %></td>
+		<td><input name="cafeType" type="text" class="readonly" readonly="readonly" value="<%=cafeType %>"></td>
 	</tr>
 	<tr>
 		<td>Additions: </td>
-		<td><%=additions %></td>
+		<td><input name="additions" type="text" class="readonly" readonly="readonly" value="<%=additions %>"></td>
 	</tr>
 	<tr>
 		<td>Payment amount:</td>
-		<td><%=cost %></td>
+		<td><input name="amount" type="text" class="readonly" readonly="readonly" value="<%=cost %>"></td>
 	</tr>
 	<tr>
 		<td>Payment type:</td>
 		<td>
-			<select name="type" onchange="javascript:selectCard(this)">
+			<select name="paymentType" onchange="javascript:selectCard(this)">
 				<option value="None">---SELECT---</option>
 				<option value="Cash">Cash</option>
 				<option value="Card">Card</option>
@@ -64,7 +65,7 @@
 <table>
 	<tr>
 		<td>Card Number: </td>
-		<td><input name="cardNO" type="text"></td>
+		<td><input name="cardNumber" type="text" value=""></td>
 	</tr>
 </table>
 </div>

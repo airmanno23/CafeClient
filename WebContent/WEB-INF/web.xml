@@ -54,4 +54,14 @@
     <servlet-name>DoUpdate</servlet-name>
     <url-pattern>/DoUpdate</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MakePayment</display-name>
+    <servlet-name>MakePayment</servlet-name>
+    <servlet-class>cs9322.cafe.control.MakePayment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MakePayment</servlet-name>
+    <url-pattern>/MakePayment</url-pattern>
+  </servlet-mapping>
 </web-app>
