@@ -20,3 +20,26 @@ function validateForm() {
 		return false;
 	}
 }
+
+function selectCard(obj) {
+	var ele = document.getElementById("cardDetail");
+	if(obj.value == "Card") {
+		ele.style.display = "block";
+	}
+	else {
+		ele.style.display = "none";
+	}
+}
+
+function validatePaymentForm() {
+	var x = document.forms["paymentForm"]["type"].value;
+	var y = document.forms["paymentForm"]["cardNO"].value;
+	if (x == null || x == "None") {
+		alert("Please choose the type of payment.");
+		return false;
+	}
+	else if(x == "Card" && y == "") {
+		alert("Please enter your card number.");
+		return false;
+	}
+}

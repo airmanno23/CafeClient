@@ -27,8 +27,17 @@
 	Client client = Client.create(cconfig);
 	WebResource service = client.resource(UriBuilder.fromUri("http://localhost:8080/CafeRESTfulServices").build());
 	String results = service.path("rest/orders").accept(MediaType.APPLICATION_JSON).get(String.class);
-	JSONObject json = new JSONObject(results);
-	JSONArray orders = json.getJSONArray("order");
+	JSONObject json = null;
+	
+	if(!results.equals("null"))
+		json = new JSONObject(results);
+	JSONArray orders = null;
+	JSONObject order = null;
+	if(json != null && json.has("order") && json.toString().contains("["))
+		orders = json.getJSONArray("order");
+	
+	if(json != null && json.has("order") && !json.toString().contains("[")) 
+		order = json.getJSONObject("order");
 	
 	String t = request.getParameter("type");
 	String a = request.getParameter("additions");
@@ -142,12 +151,13 @@
 		<td>Cost</td>
 	</tr>
 <%
-	for(int i = 0; i < orders.length(); i++) {
-		JSONObject o = new JSONObject(orders.getString(i));
-		String id = o.getString("id");
-		String type = o.getString("type");
-		String additions = o.getString("additions");
-		String cost = o.getString("cost");
+	if(orders != null) {
+		for(int i = 0; i < orders.length(); i++) {
+			JSONObject o = new JSONObject(orders.getString(i));
+			String id = o.getString("id");
+			String type = o.getString("type");
+			String additions = o.getString("additions");
+			String cost = o.getString("cost");
 %>
 	<tr>
 		<td><%=id %></td>
@@ -156,6 +166,25 @@
 		<td><%=cost %></td>
 		<td><a href="OrderCancel?id=<%=id %>">Cancel</a></td>
 		<td><a href="UpdateOrder?id=<%=id %>">Update</a></td>
+		<td><a href="Pay.jsp?id=<%=id %>">Pay</a></td>
+	</tr>
+<%
+		}
+	}
+	else if(order != null) {
+		String id = order.getString("id");
+		String type = order.getString("type");
+		String additions = order.getString("additions");
+		String cost = order.getString("cost");
+%>
+	<tr>
+		<td><%=id %></td>
+		<td><%=type %></td>
+		<td><%=additions %></td>
+		<td><%=cost %></td>
+		<td><a href="OrderCancel?id=<%=id %>">Cancel</a></td>
+		<td><a href="UpdateOrder?id=<%=id %>">Update</a></td>
+		<td><a href="Pay.jsp?id=<%=id %>">Pay</a></td>
 	</tr>
 <%
 	}
