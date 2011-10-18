@@ -44,8 +44,8 @@ public class MakePayment extends HttpServlet {
 		HttpSession session = request.getSession();
 		String paymentURI = (String) session.getAttribute("paymentURI");
 		String url = paymentURI.substring(0, paymentURI.indexOf("rest") - 1);
-		paymentURI = paymentURI.substring(paymentURI.indexOf("rest"), paymentURI.length());
-		session.removeAttribute("paymentURI");
+		paymentURI = paymentURI.substring(paymentURI.indexOf("rest"), paymentURI.lastIndexOf('/') + 1);
+		paymentURI = paymentURI + oid;
 		
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);

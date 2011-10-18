@@ -178,7 +178,7 @@
 <table align="left">
 <tr>
 <td width="60px"></td>
-<td>
+<td valign="top">
 
 <table align="left">
 	<tr>
@@ -228,11 +228,11 @@
 			payment = service.path("rest/payments/" + id).accept(MediaType.APPLICATION_JSON).get(String.class);
 %>
 		<tr>
-		<td><a href="orderDetail.jsp?id=<%=id %>">Cafe Order <%=id %></a></td>
+		<td><a class="order" href="orderDetail.jsp?id=<%=id %>">Cafe Order <%=id %></a></td>
 <% 
 			if(payment != null) {
 %>
-		<td><a href="#">Payment <%=id %></a></td>
+		<td><a class="order" href="#">Payment <%=id %></a></td>
 <%
 			} else {
 %>
