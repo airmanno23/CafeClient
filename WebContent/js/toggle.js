@@ -33,7 +33,7 @@ function selectCard(obj) {
 
 function validatePaymentForm() {
 	var x = document.forms["paymentForm"]["paymentType"].value;
-	var y = document.forms["paymentForm"]["cardNO"].value;
+	var y = document.forms["paymentForm"]["cardNumber"].value;
 	if (x == null || x == "None") {
 		alert("Please choose the type of payment.");
 		return false;
