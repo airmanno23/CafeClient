@@ -16,6 +16,7 @@ div.footer {
 	background-color: #8a4212;
 	background-image: url(../images/footer1.jpg);
 	background-size: 980px 60px;
+	font-size: 13px;
 }
 	
 input.readonly {
@@ -31,6 +32,9 @@ textarea.readonly {
 	border-color: orange;
 	border-style: dashed;
 	background: transparent;
+	font-family: cursive;
+	font-size: 13px;
+	color: #8a4212;
 }
 
 table.back {

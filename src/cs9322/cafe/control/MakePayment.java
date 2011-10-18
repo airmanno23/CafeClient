@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
@@ -40,9 +41,15 @@ public class MakePayment extends HttpServlet {
 		String paymentType = request.getParameter("paymentType");
 		String cardNumber = request.getParameter("cardNumber");
 		
+		HttpSession session = request.getSession();
+		String paymentURI = (String) session.getAttribute("paymentURI");
+		String url = paymentURI.substring(0, paymentURI.indexOf("rest") - 1);
+		paymentURI = paymentURI.substring(paymentURI.indexOf("rest"), paymentURI.length());
+		session.removeAttribute("paymentURI");
+		
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
-		WebResource service = client.resource(getBaseURI());
+		WebResource service = client.resource(getBaseURI(url));
 		
 		// change the paidStatus of order
 		Form orderForm = new Form();
@@ -55,7 +62,11 @@ public class MakePayment extends HttpServlet {
 		form.add("amount", amount);
 		form.add("type", paymentType);
 		form.add("cardNumber", cardNumber);
-		service.path("rest/payments/new").type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
+		
+		ClientResponse clientRsp = service.path(paymentURI).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
+		
+		String payResponse = clientRsp.toString() + "\n" + clientRsp.getEntity(String.class);
+		session.setAttribute("payResponse", payResponse);
 		
 		response.sendRedirect("orders.jsp");
 	}
@@ -67,7 +78,7 @@ public class MakePayment extends HttpServlet {
 		doGet(request,response);
 	}
 	
-	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost:8080/CafeRESTfulServices").build();
+	private static URI getBaseURI(String url) {
+		return UriBuilder.fromUri(url).build();
 	}
 }

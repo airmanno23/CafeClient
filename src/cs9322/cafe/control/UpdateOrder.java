@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
@@ -14,6 +15,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -42,9 +44,10 @@ public class UpdateOrder extends HttpServlet {
 		WebResource service = client.resource(getBaseURI());
 		
 		// first get the order
-		String orderStr = service.path("rest").path("orders/" + id).accept(MediaType.APPLICATION_JSON).get(String.class);
+		ClientResponse clientRsp = service.path("rest").path("orders/" + id).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 		String type = "";
 		String additions = "";
+		String orderStr = clientRsp.getEntity(String.class);
 		try {
 			JSONObject json = new JSONObject(orderStr);
 			type = json.getString("type");
@@ -53,6 +56,10 @@ public class UpdateOrder extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		HttpSession session = request.getSession();
+		String updateGetResponse = clientRsp.toString() + "\n" + orderStr;
+		session.setAttribute("updateGetResponse", updateGetResponse);
 		
 		response.sendRedirect("orders.jsp?id=" + id + "&type=" + type +"&additions=" + additions);
 	}

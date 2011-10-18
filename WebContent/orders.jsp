@@ -49,16 +49,37 @@
 	String a = request.getParameter("additions");
 	String o_id = request.getParameter("id");
 	
+	String rsp = "";
+	String payResponse = (String)session.getAttribute("payResponse");
+	String updateResponse = (String)session.getAttribute("updateResponse");
+	String updateGetResponse = (String)session.getAttribute("updateGetResponse");
+	String newResponse = (String)session.getAttribute("newResponse");
+	session.removeAttribute("payResponse");
+	session.removeAttribute("updateResponse");
+	session.removeAttribute("updateGetResponse");
+	session.removeAttribute("newResponse");
+	if(payResponse != null)
+		rsp = payResponse;
+	if(updateResponse != null)
+		rsp = updateResponse;
+	if(updateGetResponse != null)
+		rsp = updateGetResponse;
+	if(newResponse != null)
+		rsp = newResponse;
 %>
 
 <% 
 	if(t != null && t.length() != 0) {
 %>
+<table align="left">
+<tr>
+<td width="100px"><td>
+<td>
 <form method="post" action="DoUpdate">
-<table>
-	<tr><td><input name="id" value="<%=o_id %>" type="hidden"></td></tr>
+<table align="left">
+	<tr><td colspan="2"><input name="id" value="<%=o_id %>" type="hidden"></td></tr>
 	<tr>
-		<td>Type: </td>
+		<td class="name" width="150px">Type: </td>
 		<td><select id="type" name="type" style="width:120px;">
 			<option value="<%=t %>"><%=t %></option>
 <% 
@@ -86,7 +107,7 @@
 		</select></td>
 	</tr>
 	<tr>
-		<td>Additions: </td>
+		<td class="name">Additions: </td>
 		<td><select name="additions" style="width:120px;">
 			<option value="<%=a %>"><%=a %></option>
 <% 
@@ -109,19 +130,26 @@
 		</select></td>
 	</tr>
 	<tr>
-		<td><input name="cancel" value="Cancel" type="button" onclick="window.location='orders.jsp'"></td>
-		<td><input name="submit" value="Submit" type="submit"></td>
+		<td colspan="2" align="center"><input name="cancel" value="Cancel" type="button" onclick="window.location='orders.jsp'">
+		<input name="submit" value="Submit" type="submit"></td>
 	</tr>
 </table>
 </form>
+</td></tr></table>
 <% 
 	}
 %>
+
+<table align="left">
+<tr>
+<td width="100px"><td>
+<td>
+
 <div id="NewOrder" class="newOrder">
 <form id="NewOrderForm" method="post" action="MakeOrder" onsubmit="return validateForm()">
 <table>
 	<tr>
-		<td>Type: </td>
+		<td class="name" width="150px">Type: </td>
 		<td><select id="type" name="type" style="width:120px;">
 			<option value="null">----SELECT----</option>
 			<option value="Mocha" label="Mocha">Mocha</option>
@@ -131,7 +159,7 @@
 		</select></td>
 	</tr>
 	<tr>
-		<td>Additions: </td>
+		<td class="name">Additions: </td>
 		<td><select name="additions" style="width:120px;">
 			<option value="None">----SELECT----</option>
 			<option value="None" label="None">None</option>
@@ -145,6 +173,7 @@
 </table>
 </form>
 </div>
+</td></tr></table>
 
 <table align="left">
 <tr>
@@ -223,7 +252,7 @@
 </td>
 <td align="left" valign="top" width="400px" class="response">
 <div>Response: </div>
-<div align="right"><textarea readonly="readonly" class="readonly" cols="40" rows="10"></textarea>
+<div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"><%=rsp %></textarea>
 </div></td>
 </tr></table>
 

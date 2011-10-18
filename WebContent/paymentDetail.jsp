@@ -8,6 +8,7 @@
 <%@ page import="javax.ws.rs.core.UriBuilder" %>
 <%@ page import="javax.ws.rs.core.MediaType" %>    
 <%@ page import="org.codehaus.jettison.json.JSONObject" %>
+<%@ page import="com.sun.jersey.api.client.ClientResponse" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -29,16 +30,20 @@
 	ClientConfig cconfig = new DefaultClientConfig();
 	Client client = Client.create(cconfig);
 	WebResource service = client.resource(UriBuilder.fromUri("http://localhost:8080/CafeRESTfulServices").build());
-	String orderStr = service.path("rest").path("orders/" + oid).accept(MediaType.APPLICATION_JSON).get(String.class);
+	ClientResponse orderRsp = service.path("rest").path("orders/" + oid).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+	String orderStr = orderRsp.getEntity(String.class);
 	JSONObject json = new JSONObject(orderStr);
 	String cafeType = json.getString("type");
 	String additions = json.getString("additions");
 	
-	String paymentStr = service.path("rest").path("payments/" + oid).accept(MediaType.APPLICATION_JSON).get(String.class);
+	ClientResponse paymentRsp = service.path("rest").path("payments/" + oid).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+	String paymentStr = paymentRsp.getEntity(String.class);
 	JSONObject payment = new JSONObject(paymentStr);
 	String cost = payment.getString("amount");
 	String paymentType = payment.getString("type");
 	String cardNumber = payment.getString("cardNumber");
+	
+	String rsp = paymentRsp.toString() + "\n" + paymentStr;
 %>
 
 <table align="left">
@@ -88,7 +93,7 @@
 </td>
 <td align="left" valign="top" width="400px" class="response">
 <div>Response: </div>
-<div align="right"><textarea readonly="readonly" class="readonly" cols="40" rows="10"></textarea>
+<div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"><%=rsp %></textarea>
 </div></td>
 </tr></table>
 

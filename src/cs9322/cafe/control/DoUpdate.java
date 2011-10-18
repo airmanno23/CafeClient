@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
@@ -44,7 +45,11 @@ public class DoUpdate extends HttpServlet {
 		Form form = new Form();
 		form.add("type", type);
 		form.add("additions", additions);
-		service.path("rest/orders").path(id).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
+		ClientResponse clientRsp = service.path("rest/orders").path(id).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
+		
+		HttpSession session = request.getSession();
+		String updateResponse = clientRsp.toString();
+		session.setAttribute("updateResponse", updateResponse);
 		
 		response.sendRedirect("orders.jsp");
 	}

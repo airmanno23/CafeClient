@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
@@ -44,7 +45,16 @@ public class MakeOrder extends HttpServlet {
 		Form form = new Form();
 		form.add("type", type);
 		form.add("additions", additions);
-		service.path("rest/orders/new").type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, form);
+		ClientResponse clientRsp = service.path("rest/orders").type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, form);
+		
+		HttpSession session = request.getSession();
+		String content = clientRsp.getEntity(String.class);
+		String[] URIs = content.split("#");
+		String newResponse = clientRsp.toString() + "\n" + URIs[0] + "\n" + URIs[1];
+		
+		session.setAttribute("paymentURI", URIs[1]);
+		session.setAttribute("newResponse", newResponse);
+		
 		response.sendRedirect("orders.jsp");
 	}
 
