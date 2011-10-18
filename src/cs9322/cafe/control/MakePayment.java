@@ -43,6 +43,13 @@ public class MakePayment extends HttpServlet {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		WebResource service = client.resource(getBaseURI());
+		
+		// change the paidStatus of order
+		Form orderForm = new Form();
+		orderForm.add("paidStatus", "2");
+		service.path("rest/orders/" + oid).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, orderForm);
+		
+		// add new payment
 		Form form = new Form();
 		form.add("id", oid);
 		form.add("amount", amount);

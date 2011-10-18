@@ -4,6 +4,124 @@ div.newOrder {
 	display: none;
 }
 
+div.content {
+	height: 520px;
+	width: 980px;
+	background-image: url(../images/content.png);
+}
+
+div.footer {
+	height: 60px;
+	width: 980px;
+	background-color: #8a4212;
+	background-image: url(../images/footer1.jpg);
+	background-size: 980px 60px;
+}
+	
 input.readonly {
 	border:0 none;
+	background: transparent;
+	color: #8a4212;
+	font-family: cursive;
+	font-size: 14px;
+}
+
+textarea.readonly {
+	border:2px;
+	border-color: orange;
+	border-style: dashed;
+	background: transparent;
+}
+
+table.back {
+	width:100%;
+	height:860px;
+	background-color: #776441;
+}
+
+a.newOrder {
+	color: blue;
+	font-family: cursive;
+	text-decoration:none;
+	font-size: 15px;	
+}
+
+a.newOrder:hover {
+	color:red;
+	text-decoration:underline;	
+}
+
+tr.title {
+	color: #000000;
+	font-family: sans-serif;
+	font-style:italic;
+	font-size: 17px;
+}
+
+tr.order {
+	color: red;
+	font-family:cursive;	
+	font-size: 15px;
+}
+
+td.response {
+	color: #000000;
+	font-family: sans-serif;
+	font-style:italic;
+	font-size: 17px;
+}
+
+td.name {
+	color: black;
+	font-family: sans-serif;
+	font-style:italic;
+	font-size: 15px;
+}
+
+a.order {
+	color: #8a4212;
+	font-family:cursive;	
+	font-size: 15px;
+	text-decoration: none;
+}
+
+a.order:hover {
+	color:red;
+	text-decoration:underline;	
+}
+
+a.cancel {
+	color: blue;
+	font-family: cursive;
+	text-decoration:none;
+	font-size: 15px;	
+}
+
+a.cancel:hover {
+	color:red;
+	text-decoration:underline;	
+}
+
+a.update {
+	color: fuchsia;
+	font-family: cursive;
+	text-decoration:none;
+	font-size: 15px;	
+}
+
+a.update:hover {
+	color:red;
+	text-decoration:underline;	
+}
+
+a.pay {
+	color: #8a4212;
+	font-family: cursive;
+	text-decoration:none;
+	font-size: 15px;	
+}
+
+a.pay:hover {
+	color:red;
+	text-decoration:underline;	
 }

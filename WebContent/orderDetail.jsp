@@ -13,9 +13,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="js/toggle.js"></script>
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
-<title>Pay the order</title>
+<title>Detail of Order</title>
 </head>
 <body marginheight="0">
 
@@ -23,18 +22,33 @@
 <tr><td align="center" valign="top" height="280px"><img alt="" src="images/cafe-banner1.jpg"></td></tr>
 <tr>
 <td align="center" valign="top" height="520px">	
-<div class="content">
+<div class="content">	
 
 <%
 	String id = request.getParameter("id");
 	ClientConfig cconfig = new DefaultClientConfig();
 	Client client = Client.create(cconfig);
 	WebResource service = client.resource(UriBuilder.fromUri("http://localhost:8080/CafeRESTfulServices").build());
-	String result = service.path("rest").path("orders/" + id).accept(MediaType.APPLICATION_JSON).get(String.class);
-	JSONObject json = new JSONObject(result);
-	String cost = json.getString("cost");
+	String orderStr = service.path("rest").path("orders/" + id).accept(MediaType.APPLICATION_JSON).get(String.class);
+	JSONObject json = new JSONObject(orderStr);
 	String cafeType = json.getString("type");
 	String additions = json.getString("additions");
+	String cost = json.getString("cost");
+	String paidStatus = json.getString("paidStatus");
+	String baristaStatus = json.getString("baristaStatus");
+	
+	if(paidStatus.equals("1"))
+		paidStatus = "Not Paid";
+	else
+		paidStatus = "Paid";
+	
+	if(baristaStatus.equals("1"))
+		baristaStatus = "Not Prepared";
+	else if(baristaStatus.equals("2"))
+		baristaStatus = "Prepared";
+	else
+		baristaStatus = "Released";
+	
 %>
 
 <table align="left">
@@ -42,17 +56,16 @@
 <td width="100px"></td>
 <td>
 
-<form id="paymentForm" method="post" onsubmit="return validatePaymentForm()" action="MakePayment">
 <table>
 	<tr>
-		<td class="response" colspan="2">Pay the Order:</td>
+		<td class="response" colspan="2">Detail of Order:</td>
 	</tr>
 	<tr>
-		<td class="name" width="180px">Order ID:</td>
+		<td class="name" width="180px">Order ID: </td>
 		<td width="180px"><input name="oid" type="text" class="readonly" readonly="readonly" value="<%=id %>"></td>
 	</tr>
 	<tr>
-		<td class="name">Cafe type: </td>
+		<td class="name">Cafe Type: </td>
 		<td><input name="cafeType" type="text" class="readonly" readonly="readonly" value="<%=cafeType %>"></td>
 	</tr>
 	<tr>
@@ -60,36 +73,21 @@
 		<td><input name="additions" type="text" class="readonly" readonly="readonly" value="<%=additions %>"></td>
 	</tr>
 	<tr>
-		<td class="name">Payment amount:</td>
+		<td class="name">Payment Amount:</td>
 		<td><input name="amount" type="text" class="readonly" readonly="readonly" value="<%=cost %>"></td>
 	</tr>
 	<tr>
-		<td class="name">Payment type:</td>
-		<td>
-			<select name="paymentType" onchange="javascript:selectCard(this)">
-				<option value="None">---SELECT---</option>
-				<option value="Cash">Cash</option>
-				<option value="Card">Card</option>
-			</select>
-		</td>
+		<td class="name">Payment Status:</td>
+		<td><input name="amount" type="text" class="readonly" readonly="readonly" value="<%=paidStatus %>"></td>
 	</tr>
-</table>
-
-<div id="cardDetail" style="display:none;">
-<table>
 	<tr>
-		<td class="name" width="180px">Card Number: </td>
-		<td width="180px"><input name="cardNumber" type="text" value=""></td>
+		<td class="name">Barista Status:</td>
+		<td><input name="amount" type="text" class="readonly" readonly="readonly" value="<%=baristaStatus %>"></td>
 	</tr>
-</table>
-</div>
-<table>
 	<tr>
-		<td><input name="cancel" type="button" value="Cancel" onclick="window.location='orders.jsp'"></td>
-		<td><input name="submit" type="submit" value="Submit"></td>
+		<td><input type="button" value="Back" onclick="window.location='orders.jsp'"></td>
 	</tr>
 </table>
-</form>
 
 </td>
 <td align="left" valign="top" width="400px" class="response">

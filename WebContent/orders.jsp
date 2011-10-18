@@ -20,7 +20,13 @@
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 <title>Cafe Orders</title>
 </head>
-<body>
+<body marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="0" align="center" class="back">
+<tr><td align="center" valign="top" height="280px"><img alt="" src="images/cafe-banner1.jpg"></td></tr>
+<tr>
+<td align="center" valign="top" height="520px">	
+<div class="content">	
 
 <% 
 	ClientConfig cconfig = new DefaultClientConfig();
@@ -103,7 +109,8 @@
 		</select></td>
 	</tr>
 	<tr>
-		<td colspan="2"><input name="submit" value="Submit" type="submit"></td>
+		<td><input name="cancel" value="Cancel" type="button" onclick="window.location='orders.jsp'"></td>
+		<td><input name="submit" value="Submit" type="submit"></td>
 	</tr>
 </table>
 </form>
@@ -139,58 +146,93 @@
 </form>
 </div>
 
-<form method="post" action="controller">
-<table>
+<table align="left">
+<tr>
+<td width="60px"></td>
+<td>
+
+<table align="left">
 	<tr>
-		<td colspan="4"><a id="displayText" href="javascript:toggle()">New Order</a></td>
+		<td colspan="4"><a class="newOrder" id="displayText" href="javascript:toggle()">New Order</a></td>
 	</tr>
-	<tr>
-		<td>ID</td>
-		<td>Type</td>
-		<td>Additions</td>
-		<td>Cost</td>
+	<tr class="title">
+		<td width="180px">Orders</td>
+		<td width="120px">Payments</td>
+		<td colspan="3">Operations</td>
 	</tr>
 <%
 	if(orders != null) {
 		for(int i = 0; i < orders.length(); i++) {
 			JSONObject o = new JSONObject(orders.getString(i));
 			String id = o.getString("id");
-			String type = o.getString("type");
-			String additions = o.getString("additions");
-			String cost = o.getString("cost");
+			String paidStatus = o.getString("paidStatus");
+			String payment = null;
+			if(!paidStatus.equals("1")) {
+				payment = service.path("rest/payments/" + id).accept(MediaType.APPLICATION_JSON).get(String.class);
+			}
 %>
-	<tr>
-		<td><%=id %></td>
-		<td><%=type %></td>
-		<td><%=additions %></td>
-		<td><%=cost %></td>
-		<td><a href="OrderCancel?id=<%=id %>">Cancel</a></td>
-		<td><a href="UpdateOrder?id=<%=id %>">Update</a></td>
-		<td><a href="Pay.jsp?id=<%=id %>">Pay</a></td>
+	<tr class="order">
+		<td><a class="order" href="orderDetail.jsp?id=<%=id %>">Cafe Order <%=id %></a></td>
+<% 
+			if(payment != null) {
+%>
+		<td><a class="order" href="paymentDetail.jsp?id=<%=id %>">Payment <%=id %></a></td>
+<%
+			} else {
+%>
+		<td>Not Paid</td>
+<%
+			}
+%>
+		<td width="50px" align="center"><a class="cancel" href="OrderCancel?id=<%=id %>">Cancel</a></td>
+		<td width="50px" align="center"><a class="update" href="UpdateOrder?id=<%=id %>">Update</a></td>
+		<td width="35px" align="center"><a class="pay" href="Pay.jsp?id=<%=id %>">Pay</a></td>
 	</tr>
 <%
 		}
 	}
 	else if(order != null) {
 		String id = order.getString("id");
-		String type = order.getString("type");
-		String additions = order.getString("additions");
-		String cost = order.getString("cost");
+		String paidStatus = order.getString("paidStatus");
+		String payment = null;
+		if(!paidStatus.equals("1"))
+			payment = service.path("rest/payments/" + id).accept(MediaType.APPLICATION_JSON).get(String.class);
 %>
-	<tr>
-		<td><%=id %></td>
-		<td><%=type %></td>
-		<td><%=additions %></td>
-		<td><%=cost %></td>
-		<td><a href="OrderCancel?id=<%=id %>">Cancel</a></td>
-		<td><a href="UpdateOrder?id=<%=id %>">Update</a></td>
-		<td><a href="Pay.jsp?id=<%=id %>">Pay</a></td>
+		<tr>
+		<td><a href="orderDetail.jsp?id=<%=id %>">Cafe Order <%=id %></a></td>
+<% 
+			if(payment != null) {
+%>
+		<td><a href="#">Payment <%=id %></a></td>
+<%
+			} else {
+%>
+		<td>Not Paid</td>
+<%
+			}
+%>
+		<td width="50px" align="center"><a class="cancel" href="OrderCancel?id=<%=id %>">Cancel</a></td>
+		<td width="50px" align="center"><a class="update" href="UpdateOrder?id=<%=id %>">Update</a></td>
+		<td width="35px" align="center"><a class="pay" href="Pay.jsp?id=<%=id %>">Pay</a></td>
 	</tr>
 <%
 	}
 %>
 </table>
-</form>
 
+</td>
+<td align="left" valign="top" width="400px" class="response">
+<div>Response: </div>
+<div align="right"><textarea readonly="readonly" class="readonly" cols="40" rows="10"></textarea>
+</div></td>
+</tr></table>
+
+</div>
+<div class="footer">
+	Copyright ©2011-2012 SPECTACULAR All Right Reserved
+</div>
+</td>
+</tr>
+</table>
 </body>
 </html>
