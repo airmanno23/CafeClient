@@ -196,7 +196,7 @@
 	<tr class="title">
 		<td width="150px">Orders</td>
 		<td width="120px">Payments</td>
-		<td colspan="4">Operations</td>
+		<td width="185px" colspan="4">Operations</td>
 	</tr>
 <%
 	if(orders != null) {

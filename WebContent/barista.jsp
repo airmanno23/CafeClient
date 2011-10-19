@@ -25,7 +25,7 @@
 <table align="left" style="margin-top: 8px">
 <tr>
 <td width="60px"></td>
-<td>
+<td valign="top">
 	<%
 		ClientConfig cconfig = new DefaultClientConfig();
 		Client client = Client.create(cconfig);
@@ -47,8 +47,8 @@
 	   <td><a class="newOrder" href="barista.jsp">Refresh</a></td>
 	</tr>
 	<tr class="title">
-		<td>Orders</td>
-		<td>Operations</td>
+		<td width="190px">Orders</td>
+		<td width="250px">Operations</td>
 	</tr>
 	<% if (orders != null) {
 	      for (int i=0; i < orders.length(); ++i) { 
