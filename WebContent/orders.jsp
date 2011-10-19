@@ -262,6 +262,7 @@
 
 </td>
 <td align="left" valign="top" width="380px" class="response">
+<div align="right"><a class="order" href="barista.jsp">Barista</a></div>
 <div>Response: </div>
 <div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"><%=rsp %></textarea>
 </div></td>

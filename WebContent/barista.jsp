@@ -22,7 +22,7 @@
 <tr>
 <td align="center" valign="top" height="520px">	
 <div class="content">
-<table align="left">
+<table align="left" style="margin-top: 8px">
 <tr>
 <td width="60px"></td>
 <td>
@@ -58,17 +58,18 @@
 	    	  String id = jsObject.getString("id");
 	%>
 		<tr>
-			<td width="150px" align="left"><a class="order" href="orderDetail.jsp?ref=barista.jsp&id=<%=id %>">Coffee Order <%=id %></a></td>
+			<td width="190px" align="left"><a class="order" href="orderDetail.jsp?ref=barista.jsp&id=<%=id %>">Coffee Order <%=id %></a></td>
 			<td width="60px" align="center"><a class="cancel" href="UpdateOrderStatus?baristaStatus=2&id=<%=id %>">Prepare</a></td>
 			<td width="130px" align="center"><a class="update" href="CheckPayment?id=<%=id %>">Check Payment</a></td>
-			<td width="50px" align="center"><a class="pay" href="UpdateOrderStatus?baristaStatus=3&id=<%=id %>">Release</a></td>
+			<td width="60px" align="center"><a class="pay" href="UpdateOrderStatus?baristaStatus=3&id=<%=id %>">Release</a></td>
 		</tr>
 	<%   } //end for
 	  } //end if
 	%>
 	</table>
 	</td>
-<td align="left" valign="top" width="400px" class="response">
+<td align="left" valign="top" width="380px" class="response">
+<div align="right"><a class="order" href="orders.jsp">Cashier</a></div>
 <div>Response: </div>
 <div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"></textarea>
 </div></td>
