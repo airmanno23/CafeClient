@@ -27,6 +27,9 @@
 
 <%
 	String oid = request.getParameter("id");
+    String ref = request.getParameter("ref");
+    if(ref == null)
+    	ref = "orders.jsp";
 	ClientConfig cconfig = new DefaultClientConfig();
 	Client client = Client.create(cconfig);
 	WebResource service = client.resource(UriBuilder.fromUri("http://localhost:8080/CafeRESTfulServices").build());
@@ -86,7 +89,7 @@
 	}
 %>
 	<tr>
-		<td><input type="button" value="Back" onclick="window.location='orders.jsp'"></td>
+		<td><input type="button" value="Back" onclick="window.location='<%=ref %>'"></td>
 	</tr>
 </table>
 

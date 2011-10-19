@@ -38,9 +38,23 @@
 		if (!results.equals("null"))
 			json = new JSONObject(results);
 		JSONArray orders = null;
-		if (json != null && json.has("order")
-				&& json.toString().contains("["))
+		JSONObject order = null;
+		if(json != null && json.has("order") && json.toString().contains("["))
 			orders = json.getJSONArray("order");
+		
+		if(json != null && json.has("order") && !json.toString().contains("[")) 
+			order = json.getJSONObject("order");
+		
+		
+		String rsp = "";
+		String updateStatusResponse = (String)session.getAttribute("updateStatusResponse");
+		String checkPaymentResponse = (String)session.getAttribute("checkPaymentResponse");
+		session.removeAttribute("updateStatusResponse");
+		session.removeAttribute("checkPaymentResponse");
+		if(updateStatusResponse != null)
+			rsp = updateStatusResponse;
+		if(checkPaymentResponse != null)
+			rsp = checkPaymentResponse;
 	%>
 	<table align="left">
 	<tr>
@@ -48,7 +62,7 @@
 	</tr>
 	<tr class="title">
 		<td width="190px">Orders</td>
-		<td width="250px">Operations</td>
+		<td width="250px" colspan="3">Operations</td>
 	</tr>
 	<% if (orders != null) {
 	      for (int i=0; i < orders.length(); ++i) { 
@@ -64,14 +78,24 @@
 			<td width="60px" align="center"><a class="pay" href="UpdateOrderStatus?baristaStatus=3&id=<%=id %>">Release</a></td>
 		</tr>
 	<%   } //end for
-	  } //end if
+	  } else if (order != null && !order.getString("baristaStatus").equals("3")) {
+		 String id = order.getString("id");
+	%>
+	    <tr>
+			<td width="190px" align="left"><a class="order" href="orderDetail.jsp?ref=barista.jsp&id=<%=id %>">Coffee Order <%=id %></a></td>
+			<td width="60px" align="center"><a class="cancel" href="UpdateOrderStatus?baristaStatus=2&id=<%=id %>">Prepare</a></td>
+			<td width="130px" align="center"><a class="update" href="CheckPayment?id=<%=id %>">Check Payment</a></td>
+			<td width="60px" align="center"><a class="pay" href="UpdateOrderStatus?baristaStatus=3&id=<%=id %>">Release</a></td>
+		</tr>
+    <%
+	  }//end if
 	%>
 	</table>
 	</td>
 <td align="left" valign="top" width="380px" class="response">
 <div align="right"><a class="order" href="orders.jsp">Cashier</a></div>
 <div>Response: </div>
-<div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"></textarea>
+<div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"><%=rsp %></textarea>
 </div></td>
 </tr></table>
 
