@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 <title>Detail of Payment</title>
 </head>
-<body marginheight="0">
+<body marginheight="0" leftmargin="0" rightmargin="0">
 
 <table border="0" cellpadding="0" cellspacing="0" align="center" class="back">
 <tr><td align="center" valign="top" height="280px"><img alt="" src="images/cafe-banner1.jpg"></td></tr>
@@ -60,7 +60,7 @@
 		<td width="180px"><input name="oid" type="text" class="readonly" readonly="readonly" value="<%=oid %>"></td>
 	</tr>
 	<tr>
-		<td class="name">Cafe Type: </td>
+		<td class="name">Coffee Type: </td>
 		<td><input name="cafeType" type="text" class="readonly" readonly="readonly" value="<%=cafeType %>"></td>
 	</tr>
 	<tr>

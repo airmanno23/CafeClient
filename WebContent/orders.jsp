@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 <title>Cafe Orders</title>
 </head>
-<body marginheight="0">
+<body marginheight="0" leftmargin="0" rightmargin="0">
 
 <table border="0" cellpadding="0" cellspacing="0" align="center" class="back">
 <tr><td align="center" valign="top" height="280px"><img alt="" src="images/cafe-banner1.jpg"></td></tr>
@@ -49,6 +49,7 @@
 	String a = request.getParameter("additions");
 	String o_id = request.getParameter("id");
 	
+	session.setAttribute("paymentURI", "http://localhost:8080/CafeRESTfulServices/rest/payments/1");
 	String rsp = "";
 	String payResponse = (String)session.getAttribute("payResponse");
 	String updateResponse = (String)session.getAttribute("updateResponse");
@@ -209,7 +210,7 @@
 			}
 %>
 	<tr class="order">
-		<td><a class="order" href="orderDetail.jsp?id=<%=id %>">Cafe Order <%=id %></a></td>
+		<td><a class="order" href="orderDetail.jsp?ref=orders.jsp&id=<%=id %>">Coffee Order <%=id %></a></td>
 <% 
 			if(payment != null) {
 %>
@@ -236,8 +237,8 @@
 		if(!paidStatus.equals("1"))
 			payment = service.path("rest/payments/" + id).accept(MediaType.APPLICATION_JSON).get(String.class);
 %>
-		<tr>
-		<td><a class="order" href="orderDetail.jsp?id=<%=id %>">Cafe Order <%=id %></a></td>
+		<tr class="order">
+		<td><a class="order" href="orderDetail.jsp?ref=orders.jsp&id=<%=id %>">Coffee Order <%=id %></a></td>
 <% 
 			if(payment != null) {
 %>

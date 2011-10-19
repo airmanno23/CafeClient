@@ -50,9 +50,9 @@ public class UpdateOrderStatus extends HttpServlet {
 			String updateStatusResponse = clientResponse.toString();
 			session.setAttribute("updateStatusResponse", updateStatusResponse);
 			if (baristaStatus.equals("2"))
-			    response.sendRedirect("error.jsp?id=4");
+			    response.sendRedirect("error.jsp?ref=barista.jsp&id=4");
 			else
-				response.sendRedirect("error.jsp?id=5");
+				response.sendRedirect("error.jsp?ref=barista.jsp&id=5");
 		}
 		else {
 			String updateStatusResponse = clientResponse.toString() + "\n" + clientResponse.getEntity(String.class);

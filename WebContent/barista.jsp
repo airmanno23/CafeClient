@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 <title>Barista</title>
 </head>
-<body>
+<body marginheight="0" leftmargin="0" rightmargin="0">
 <table border="0" cellpadding="0" cellspacing="0" align="center" class="back">
 <tr><td align="center" valign="top" height="280px"><img alt="" src="images/cafe-banner1.jpg"></td></tr>
 <tr>
@@ -44,7 +44,11 @@
 	%>
 	<table align="left">
 	<tr>
-	   <td><input type=button value="Refresh" onclick="window.location.reload()"></td>
+	   <td><a class="newOrder" href="barista.jsp">Refresh</a></td>
+	</tr>
+	<tr class="title">
+		<td>Orders</td>
+		<td>Operations</td>
 	</tr>
 	<% if (orders != null) {
 	      for (int i=0; i < orders.length(); ++i) { 
@@ -54,10 +58,10 @@
 	    	  String id = jsObject.getString("id");
 	%>
 		<tr>
-			<td width="200px" align="center"><a href="orderDetail.jsp?id=<%=id %>">Coffee Order <%=id %></a></td>
-			<td width="100px" align="center"><a href="UpdateOrderStatus?baristaStatus=2&id=<%=id %>">Prepare</a></td>
-			<td width="150px" align="center"><a href="CheckPayment?id=<%=id %>">Check Payment</a></td>
-			<td width="50px" align="center"><a href="UpdateOrderStatus?baristaStatus=3&id=<%=id %>">Release</a></td>
+			<td width="150px" align="left"><a class="order" href="orderDetail.jsp?ref=barista.jsp&id=<%=id %>">Coffee Order <%=id %></a></td>
+			<td width="60px" align="center"><a class="cancel" href="UpdateOrderStatus?baristaStatus=2&id=<%=id %>">Prepare</a></td>
+			<td width="130px" align="center"><a class="update" href="CheckPayment?id=<%=id %>">Check Payment</a></td>
+			<td width="50px" align="center"><a class="pay" href="UpdateOrderStatus?baristaStatus=3&id=<%=id %>">Release</a></td>
 		</tr>
 	<%   } //end for
 	  } //end if
@@ -66,7 +70,7 @@
 	</td>
 <td align="left" valign="top" width="400px" class="response">
 <div>Response: </div>
-<div align="right"><textarea readonly="readonly" class="readonly" cols="40" rows="10"></textarea>
+<div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"></textarea>
 </div></td>
 </tr></table>
 

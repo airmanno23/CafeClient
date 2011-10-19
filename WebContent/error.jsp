@@ -7,9 +7,12 @@
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
 <title>Error</title>
 </head>
-<body marginheight="0">
+<body marginheight="0" leftmargin="0" rightmargin="0">
 
 <%
+	String ref = request.getParameter("ref");
+	if(ref == null)
+		ref = "orders.jsp";
 	String rsp = "";
 	String deleteResponse = (String)session.getAttribute("deleteResponse");
 	String updateResponse = (String)session.getAttribute("updateResponse");
@@ -55,7 +58,7 @@
 <td width="60px"></td>
 <td valign="middle" width="400px" class="error">
 <div><%=errorMsg %></div>
-<div align="right"><input value="Back" type="button" onclick="window.location='orders.jsp'"></div>
+<div align="right"><input value="Back" type="button" onclick="window.location='<%=ref %>'"></div>
 </td>
 <td align="left" valign="top" width="400px" class="response">
 <div>Response: </div>
