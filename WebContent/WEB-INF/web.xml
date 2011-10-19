@@ -74,4 +74,24 @@
     <servlet-name>CheckOptions</servlet-name>
     <url-pattern>/CheckOptions</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>UpdateOrderStatus</display-name>
+    <servlet-name>UpdateOrderStatus</servlet-name>
+    <servlet-class>cs9322.cafe.control.UpdateOrderStatus</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateOrderStatus</servlet-name>
+    <url-pattern>/UpdateOrderStatus</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CheckPayment</display-name>
+    <servlet-name>CheckPayment</servlet-name>
+    <servlet-class>cs9322.cafe.control.CheckPayment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckPayment</servlet-name>
+    <url-pattern>/CheckPayment</url-pattern>
+  </servlet-mapping>
 </web-app>

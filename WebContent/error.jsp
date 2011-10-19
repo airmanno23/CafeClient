@@ -14,15 +14,19 @@
 	String deleteResponse = (String)session.getAttribute("deleteResponse");
 	String updateResponse = (String)session.getAttribute("updateResponse");
 	String payResponse = (String)session.getAttribute("payResponse");
+	String updateStatusResponse = (String)session.getAttribute("updateStatusResponse");
 	session.removeAttribute("deleteResponse");
 	session.removeAttribute("updateResponse");
 	session.removeAttribute("payResponse");
+	session.removeAttribute("updateStatusResponse");
 	if(deleteResponse != null)
 		rsp = deleteResponse;
 	if(updateResponse != null)
 		rsp = updateResponse;
 	if(payResponse != null)
 		rsp = payResponse;
+	if(updateStatusResponse != null)
+		rsp = updateStatusResponse;
 	String id = request.getParameter("id");
 	String errorMsg = "";
 	if(id != null) {
@@ -32,6 +36,10 @@
 			errorMsg = "Oops, you can not update this order.";
 		if(id.equals("3"))
 			errorMsg = "Oops, you can not pay this order.";
+		if(id.equals("4"))
+			errorMsg = "Oops, you can not prepare this order again.";
+		if(id.equals("5"))
+			errorMsg = "Oops, not ready yet, you can not release this order.";
 	}
 
 %>
