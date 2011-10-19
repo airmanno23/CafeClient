@@ -54,21 +54,27 @@ public class MakePayment extends HttpServlet {
 		// change the paidStatus of order
 		Form orderForm = new Form();
 		orderForm.add("paidStatus", "2");
-		service.path("rest/orders/" + oid).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, orderForm);
-		
-		// add new payment
-		Form form = new Form();
-		form.add("id", oid);
-		form.add("amount", amount);
-		form.add("type", paymentType);
-		form.add("cardNumber", cardNumber);
-		
-		ClientResponse clientRsp = service.path(paymentURI).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
-		
-		String payResponse = clientRsp.toString() + "\n" + clientRsp.getEntity(String.class);
-		session.setAttribute("payResponse", payResponse);
-		
-		response.sendRedirect("orders.jsp");
+		ClientResponse orderRsp = service.path("rest/orders/" + oid).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, orderForm);
+		if(orderRsp.getStatus() == 403) {
+			String payResponse = orderRsp.toString();
+			session.setAttribute("payResponse", payResponse);
+			response.sendRedirect("error.jsp?id=3");
+		}
+		else {
+			// add new payment
+			Form form = new Form();
+			form.add("id", oid);
+			form.add("amount", amount);
+			form.add("type", paymentType);
+			form.add("cardNumber", cardNumber);
+			
+			ClientResponse clientRsp = service.path(paymentURI).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
+			
+			String payResponse = clientRsp.toString() + "\n" + clientRsp.getEntity(String.class);
+			session.setAttribute("payResponse", payResponse);
+			
+			response.sendRedirect("orders.jsp");
+		}
 	}
 
 	/**

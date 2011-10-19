@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
 import com.sun.jersey.api.client.Client;
@@ -16,19 +15,17 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.representation.Form;
-
 
 /**
- * Servlet implementation class MakeOrder
+ * Servlet implementation class CheckOptions
  */
-public class MakeOrder extends HttpServlet {
+public class CheckOptions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MakeOrder() {
+    public CheckOptions() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,23 +34,15 @@ public class MakeOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String type = request.getParameter("type");
-		String additions = request.getParameter("additions");
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		WebResource service = client.resource(getBaseURI());
-		Form form = new Form();
-		form.add("type", type);
-		form.add("additions", additions);
-		ClientResponse clientRsp = service.path("rest/orders").type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, form);
+		String id = request.getParameter("id");
+		ClientResponse optionsClient = service.path("rest/orders/" + id).options(ClientResponse.class);
+		String optionsResponse = optionsClient.toString() + "\n" + optionsClient.getEntity(String.class);
 		
 		HttpSession session = request.getSession();
-		String content = clientRsp.getEntity(String.class);
-		String[] URIs = content.split("#");
-		String newResponse = clientRsp.toString() + "\n" + URIs[0]+ "\n" + URIs[1] + "\n" + URIs[2];
-		
-		session.setAttribute("paymentURI", URIs[2]);
-		session.setAttribute("newResponse", newResponse);
+		session.setAttribute("optionsResponse", optionsResponse);
 		
 		response.sendRedirect("orders.jsp");
 	}
@@ -68,5 +57,4 @@ public class MakeOrder extends HttpServlet {
 	private static URI getBaseURI() {
 		return UriBuilder.fromUri("http://localhost:8080/CafeRESTfulServices").build();
 	}
-
 }

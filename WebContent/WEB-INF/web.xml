@@ -64,4 +64,14 @@
     <servlet-name>MakePayment</servlet-name>
     <url-pattern>/MakePayment</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CheckOptions</display-name>
+    <servlet-name>CheckOptions</servlet-name>
+    <servlet-class>cs9322.cafe.control.CheckOptions</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckOptions</servlet-name>
+    <url-pattern>/CheckOptions</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -48,10 +48,17 @@ public class DoUpdate extends HttpServlet {
 		ClientResponse clientRsp = service.path("rest/orders").path(id).type(MediaType.APPLICATION_FORM_URLENCODED).put(ClientResponse.class, form);
 		
 		HttpSession session = request.getSession();
-		String updateResponse = clientRsp.toString();
-		session.setAttribute("updateResponse", updateResponse);
 		
-		response.sendRedirect("orders.jsp");
+		if(clientRsp.getStatus() == 403) {
+			String updateResponse = clientRsp.toString();
+			session.setAttribute("updateResponse", updateResponse);
+			response.sendRedirect("error.jsp?id=2");
+		}
+		else{
+			String updateResponse = clientRsp.toString() + "\n" + clientRsp.getEntity(String.class);
+			session.setAttribute("updateResponse", updateResponse);
+			response.sendRedirect("orders.jsp");
+		}
 	}
 
 	/**

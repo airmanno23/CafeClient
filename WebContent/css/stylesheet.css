@@ -82,6 +82,12 @@ td.name {
 	font-size: 15px;
 }
 
+td.error {
+	color: #8a4212;
+	font-family:cursive;	
+	font-size: 20px;
+}
+
 a.order {
 	color: #8a4212;
 	font-family:cursive;	
@@ -126,6 +132,18 @@ a.pay {
 }
 
 a.pay:hover {
+	color:red;
+	text-decoration:underline;	
+}
+
+a.options {
+	color: #8a52ff;
+	font-family: cursive;
+	text-decoration:none;
+	font-size: 15px;
+}
+
+a.options:hover {
 	color:red;
 	text-decoration:underline;	
 }

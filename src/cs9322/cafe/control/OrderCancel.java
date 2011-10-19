@@ -7,9 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -36,9 +39,17 @@ public class OrderCancel extends HttpServlet {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		WebResource service = client.resource(getBaseURI());
-		service.path("rest/orders/" + id).delete();
-		response.sendRedirect("orders.jsp");
 		
+		ClientResponse clientRsp = service.path("rest/orders/" + id).type(MediaType.TEXT_XML).delete(ClientResponse.class);
+		String deleteResponse = clientRsp.toString();
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("deleteResponse", deleteResponse);
+		
+		if(clientRsp.getStatus() != 200)
+			response.sendRedirect("error.jsp?id=1");
+		else 
+			response.sendRedirect("orders.jsp");
 	}
 
 	/**

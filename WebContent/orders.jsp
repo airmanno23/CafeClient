@@ -54,10 +54,14 @@
 	String updateResponse = (String)session.getAttribute("updateResponse");
 	String updateGetResponse = (String)session.getAttribute("updateGetResponse");
 	String newResponse = (String)session.getAttribute("newResponse");
+	String deleteResponse = (String)session.getAttribute("deleteResponse");
+	String optionsResponse = (String)session.getAttribute("optionsResponse");
 	session.removeAttribute("payResponse");
 	session.removeAttribute("updateResponse");
 	session.removeAttribute("updateGetResponse");
 	session.removeAttribute("newResponse");
+	session.removeAttribute("deleteResponse");
+	session.removeAttribute("optionsResponse");
 	if(payResponse != null)
 		rsp = payResponse;
 	if(updateResponse != null)
@@ -66,6 +70,10 @@
 		rsp = updateGetResponse;
 	if(newResponse != null)
 		rsp = newResponse;
+	if(deleteResponse != null)
+		rsp = deleteResponse;
+	if(optionsResponse != null)
+		rsp = optionsResponse;
 %>
 
 <% 
@@ -185,9 +193,9 @@
 		<td colspan="4"><a class="newOrder" id="displayText" href="javascript:toggle()">New Order</a></td>
 	</tr>
 	<tr class="title">
-		<td width="180px">Orders</td>
+		<td width="150px">Orders</td>
 		<td width="120px">Payments</td>
-		<td colspan="3">Operations</td>
+		<td colspan="4">Operations</td>
 	</tr>
 <%
 	if(orders != null) {
@@ -216,6 +224,7 @@
 		<td width="50px" align="center"><a class="cancel" href="OrderCancel?id=<%=id %>">Cancel</a></td>
 		<td width="50px" align="center"><a class="update" href="UpdateOrder?id=<%=id %>">Update</a></td>
 		<td width="35px" align="center"><a class="pay" href="Pay.jsp?id=<%=id %>">Pay</a></td>
+		<td width="50px" align="center"><a class="options" href="CheckOptions?id=<%=id %>">Options</a></td>
 	</tr>
 <%
 		}
@@ -232,7 +241,7 @@
 <% 
 			if(payment != null) {
 %>
-		<td><a class="order" href="#">Payment <%=id %></a></td>
+		<td><a class="order" href="paymentDetail.jsp?id=<%=id %>">Payment <%=id %></a></td>
 <%
 			} else {
 %>
@@ -243,6 +252,7 @@
 		<td width="50px" align="center"><a class="cancel" href="OrderCancel?id=<%=id %>">Cancel</a></td>
 		<td width="50px" align="center"><a class="update" href="UpdateOrder?id=<%=id %>">Update</a></td>
 		<td width="35px" align="center"><a class="pay" href="Pay.jsp?id=<%=id %>">Pay</a></td>
+		<td width="50px" align="center"><a class="options" href="CheckOptions?id=<%=id %>">Options</a></td>
 	</tr>
 <%
 	}
@@ -250,7 +260,7 @@
 </table>
 
 </td>
-<td align="left" valign="top" width="400px" class="response">
+<td align="left" valign="top" width="380px" class="response">
 <div>Response: </div>
 <div align="right"><textarea readonly="readonly" class="readonly" cols="50" rows="10"><%=rsp %></textarea>
 </div></td>
